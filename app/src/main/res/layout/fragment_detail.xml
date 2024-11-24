@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="course"
+            type="com.odeniz.learnconnect.entity.Course" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".home.DetailFragment">
+
+        <ImageView
+            android:id="@+id/thumbnailImageView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/course_card_height"
+            android:contentDescription="@{course.title}"
+            android:scaleType="fitXY"
+            app:imageUrl="@{course.thumbnailUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_10"
+            android:layout_marginEnd="@dimen/_5"
+            android:layout_marginBottom="@dimen/_12"
+            android:numStars="5"
+            android:rating="@{course.averageRating}"
+            app:layout_constraintEnd_toStartOf="@id/ratingCountTextView"
+            app:layout_constraintTop_toBottomOf="@id/thumbnailImageView" />
+
+        <TextView
+            android:id="@+id/ratingCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10"
+            android:layout_marginEnd="@dimen/_12"
+            android:layout_marginBottom="@dimen/_12"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="4"
+            android:scrollHorizontally="false"
+            android:textSize="@dimen/text_12"
+            app:formattedRatingCount="@{course.ratingCount}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thumbnailImageView"
+            tools:text="(120)" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10"
+            android:maxLines="2"
+            android:text="@{course.title}"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thumbnailImageView"
+            tools:text="Beginner Java Course OOP, And More..." />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="4"
+            android:scrollHorizontally="false"
+            android:text="@{course.description}"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            tools:text="Learn how financial markets work, including stocks, bonds, and derivatives. Explore strategies for trading and investment." />
+
+        <TextView
+            android:id="@+id/categoryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="4"
+            android:scrollHorizontally="false"
+            android:text="@string/category"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+            tools:text="Category : " />
+
+        <TextView
+            android:id="@+id/categoryTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5"
+            android:layout_marginTop="@dimen/_10"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="4"
+            android:scrollHorizontally="false"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintStart_toEndOf="@id/categoryTextView"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+            tools:text="Software" />
+
+        <LinearLayout
+            android:id="@+id/layout_chip_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10"
+            android:layout_marginEnd="@dimen/_10"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/categoryTypeTextView">
+
+            <TextView
+                android:id="@+id/categoryTagsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="start|top"
+                android:maxLines="4"
+                android:scrollHorizontally="false"
+                android:text="@string/category_tags"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@string/category_tags">
+
+                <LinearLayout
+                    android:id="@+id/chip_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_5" />
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/save_to_list"
+            android:layout_width="@dimen/_48"
+            android:layout_height="@dimen/_48"
+            android:layout_marginEnd="@dimen/_12"
+            android:contentDescription="@string/save"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/video_content_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="1"
+            android:scrollHorizontally="false"
+            android:text="@string/course_video_content"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_chip_group" />
+
+        <TextView
+            android:id="@+id/video_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5"
+            android:layout_marginTop="@dimen/_10"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintStart_toEndOf="@id/video_content_textView"
+            app:layout_constraintTop_toBottomOf="@id/layout_chip_group"
+            tools:text="12 Video(s)" />
+
+        <TextView
+            android:id="@+id/video_time_content_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="1"
+            android:scrollHorizontally="false"
+            android:text="@string/course_video_time"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/video_count_text" />
+
+        <TextView
+            android:id="@+id/video_time_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5"
+            android:layout_marginTop="@dimen/_10"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintStart_toEndOf="@id/video_content_textView"
+            app:layout_constraintTop_toBottomOf="@id/video_count_text"
+            tools:text="2h 30m" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/videos_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/_12"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/video_time_content_textView" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buy_course_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10"
+            android:backgroundTint="@color/error_text_red"
+            android:contentDescription="@string/save"
+            android:src="@drawable/add_shopping"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

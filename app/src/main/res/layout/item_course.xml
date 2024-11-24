@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="course"
+            type="com.odeniz.learnconnect.entity.Course" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/course_card_height"
+        android:layout_marginStart="@dimen/_10"
+        android:layout_marginTop="@dimen/_5"
+        android:layout_marginEnd="@dimen/_10"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/thumbnailImageView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/course_card_img_height"
+            android:contentDescription="@{course.title}"
+            android:scaleType="fitXY"
+            app:imageUrl="@{course.thumbnailUrl}" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5"
+            android:text="@{course.title}"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="start|top"
+            android:maxLines="2"
+            android:padding="@dimen/_5"
+            android:scrollHorizontally="false"
+            android:text="@{course.description}"
+            android:textSize="@dimen/text_14" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:numStars="5"
+            android:rating="@{course.averageRating}" />
+    </LinearLayout>
+</layout>
