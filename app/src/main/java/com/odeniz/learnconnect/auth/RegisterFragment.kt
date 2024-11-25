@@ -13,10 +13,11 @@ import com.odeniz.learnconnect.HomeActivity
 import com.odeniz.learnconnect.R
 import com.odeniz.learnconnect.databinding.FragmentRegisterBinding
 import com.odeniz.learnconnect.model.UserDto
+import com.odeniz.learnconnect.util.LinkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment: Fragment() {
+class RegisterFragment : Fragment() {
 
     private val viewModel: RegisterViewModel by viewModels()
     private var _binding: FragmentRegisterBinding? = null
@@ -35,6 +36,9 @@ class RegisterFragment: Fragment() {
 
         binding.backLoginAction.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
+        binding.policyTextView.setOnClickListener {
+            LinkUtils.openUrl(requireContext())
         }
 
         binding.registerBtnAction.setOnClickListener {

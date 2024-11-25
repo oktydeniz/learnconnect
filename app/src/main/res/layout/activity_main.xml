@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".HomeActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_64"
@@ -22,11 +22,13 @@
             android:id="@+id/back_action_fragment"
             android:layout_width="@dimen/_64"
             android:layout_height="@dimen/_64"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@android:color/transparent"
             android:contentDescription="@string/back"
             android:src="@drawable/ic_arrow_back"
             app:contentInsetStart="@dimen/_0"
-            app:tint="@color/black" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/error_text_red" />
 
         <TextView
             android:id="@+id/main_toolbar_title"
@@ -44,8 +46,9 @@
             android:layout_marginEnd="@dimen/_10"
             android:background="@null"
             android:contentDescription="@string/settings"
-            android:src="@drawable/ic_settings" />
-    </androidx.appcompat.widget.Toolbar>
+            android:src="@drawable/ic_settings"
+            app:tint="@color/error_text_red" />
+    </Toolbar>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_fragment_container_view"
@@ -63,8 +66,10 @@
         android:id="@+id/main_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         app:itemIconSize="@dimen/_24"
+        app:itemIconTint="@color/error_text_red"
+        app:itemTextAppearanceActive="@color/error_text_red"
+        app:itemTextColor="@color/bottom_bar_background_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

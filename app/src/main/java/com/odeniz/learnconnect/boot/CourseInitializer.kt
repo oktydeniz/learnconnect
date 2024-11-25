@@ -149,7 +149,7 @@ object CourseInitializer {
                 title = "Introduction to Meditation",
                 description = "Discover the basics of meditation and how to incorporate mindfulness into daily life.",
                 thumbnailUrl = "https://oif.org/wp-content/uploads/2021/05/meditation.png",
-                averageRating = 4.9f,
+                averageRating = 3.9f,
                 ratingCount = 250,
                 categoryId = 3,
                 subTags = "Meditation,Mindfulness,Relaxation,Stress Relief,Health"
@@ -250,7 +250,7 @@ object CourseInitializer {
                 title = "Mindfulness for Everyday Life",
                 description = "Discover practical mindfulness techniques to reduce stress and improve your focus and well-being.",
                 thumbnailUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVXkR0CPV7gmen9W4XrWyh8XK3R3SVSXFWrQ&s",
-                averageRating = 4.9f,
+                averageRating = 3.5f,
                 ratingCount = 240,
                 categoryId = 4,
                 subTags = "Mindfulness,Stress Relief,Focus,Personal Development"
@@ -542,7 +542,7 @@ object CourseInitializer {
                 title = "Advanced Java Programming",
                 description = "Dive deep into Java programming concepts including multi-threading, file handling, and advanced design patterns.",
                 thumbnailUrl = "https://media.geeksforgeeks.org/wp-content/uploads/20230823152056/What-is-Advance-JAVA.png",
-                averageRating = 4.9f,
+                averageRating = 4.2f,
                 ratingCount = 250,
                 categoryId = 1,
                 subTags = "Java,Advanced Programming,Multi-threading,Design Patterns"
@@ -572,7 +572,7 @@ object CourseInitializer {
                 id = 233,
                 title = "Building Mobile Apps with Flutter",
                 description = "Master the art of mobile app development using Flutter, and build beautiful and responsive apps for both iOS and Android.",
-                thumbnailUrl = "",
+                thumbnailUrl = "https://miro.medium.com/v2/resize:fit:1400/1*-mOO444aE0ysjnJofbxBkQ.png",
                 averageRating = 4.6f,
                 ratingCount = 210,
                 categoryId = 1,
@@ -595,7 +595,7 @@ object CourseInitializer {
                 thumbnailUrl = "https://media.licdn.com/dms/image/v2/D4D12AQFC7bQ9hFIxkQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1723981490996?e=2147483647&v=beta&t=CEg8w-_yBc9jD1aiKseh01aBc_wD44CMM8WizF9ZIAs",
                 averageRating = 4.9f,
                 ratingCount = 230,
-                categoryId = 1,
+                categoryId = 10,
                 subTags = "Git,GitHub,Version Control,Collaboration,Development"
             ),
             Course(

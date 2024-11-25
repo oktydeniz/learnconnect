@@ -45,7 +45,7 @@ class CategoryItemsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-       hideBottomBar()
+        hideBottomBar()
     }
 
     override fun onCreateView(
@@ -90,6 +90,7 @@ class CategoryItemsFragment : Fragment() {
                     binding.homeErrorText.visibility = View.GONE
                     binding.recyclerViewVertical.visibility = View.GONE
                 }
+
                 else -> {}
             }
         }
@@ -107,12 +108,16 @@ class CategoryItemsFragment : Fragment() {
 
     private fun showBottomBar() {
         val bottomBar = requireActivity().findViewById<View>(R.id.main_bottom_nav)
-        bottomBar.visibility = View.VISIBLE
+        bottomBar?.let {
+            bottomBar.visibility = View.VISIBLE
+        }
     }
 
     private fun hideBottomBar() {
         val bottomBar = requireActivity().findViewById<View>(R.id.main_bottom_nav)
-        bottomBar.visibility = View.GONE
+        bottomBar?.let {
+            bottomBar.visibility = View.GONE
+        }
     }
 
 }

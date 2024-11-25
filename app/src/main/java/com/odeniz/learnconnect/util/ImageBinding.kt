@@ -11,7 +11,7 @@ fun bindImage(imageView: ImageView, imageUri: Bitmap?) {
     if (imageUri != null) {
         imageView.setImageBitmap(imageUri)
     } else {
-        imageView.setImageResource(R.drawable.ic_launcher_background)
+        imageView.setImageResource(R.drawable.profile_img)
     }
 }
 

@@ -13,6 +13,7 @@ import com.odeniz.learnconnect.entity.dao.CourseDao
 import com.odeniz.learnconnect.entity.dao.UserCourseDao
 import com.odeniz.learnconnect.entity.dao.UserDao
 import com.odeniz.learnconnect.entity.dao.VideoDao
+import com.odeniz.learnconnect.entity.dao.VideoProgressDao
 import com.odeniz.learnconnect.entity.dao.WishlistDao
 import com.odeniz.learnconnect.local.AppDatabase
 import com.odeniz.learnconnect.local.DataStoreManager
@@ -88,6 +89,11 @@ class AppModule {
     @Provides
     fun provideVideoDao(database: AppDatabase): VideoDao {
         return database.videoDao()
+    }
+
+    @Provides
+    fun provideVideoProgressDao(database: AppDatabase): VideoProgressDao {
+        return database.videoProgressDao()
     }
 
     @Provides

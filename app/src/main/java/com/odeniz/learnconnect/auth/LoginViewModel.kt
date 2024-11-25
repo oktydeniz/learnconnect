@@ -12,7 +12,7 @@ import com.odeniz.learnconnect.local.DataStoreManager
 import com.odeniz.learnconnect.util.VerifyFields
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -35,15 +35,20 @@ class LoginViewModel @Inject constructor(
             _loginState.value = UserState.Loading
             try {
                 withContext(Dispatchers.IO) {
-                    val user = userDao.getUser(email, password).first()
-                    user?.let {
-                        saveLoginStatus(it)
+                    val user = userDao.getUser(email, password).firstOrNull()
+                    if (user != null) {
+                        saveLoginStatus(user)
+                        withContext(Dispatchers.Main){
+                            _loginState.value = UserState.Success
+                        }
+                    } else {
+                        _loginState.value =
+                            UserState.Error(resources.getString(R.string.failed_to_login_user))
                     }
                 }
-                _loginState.value = UserState.Success
             } catch (e: Exception) {
                 _loginState.value =
-                    UserState.Error(resources.getString(R.string.failed_to_register_user))
+                    UserState.Error(resources.getString(R.string.failed_to_login_user))
             }
         }
     }

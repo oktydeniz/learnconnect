@@ -1,6 +1,7 @@
 package com.odeniz.learnconnect.home
 
 import android.content.Intent
+import android.content.res.Resources.Theme
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.odeniz.learnconnect.R
 import com.odeniz.learnconnect.adapter.VideoListAdapter
 import com.odeniz.learnconnect.databinding.FragmentDetailBinding
 import com.odeniz.learnconnect.entity.Course
+import com.odeniz.learnconnect.entity.Video
 import com.odeniz.learnconnect.home.state.DetailState
 import com.odeniz.learnconnect.player.FullScreenPlayerActivity
 import com.odeniz.learnconnect.util.DateUtil
@@ -34,6 +36,8 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
     private var course: Course? = null
     private var canUserOpenVideos = false
+    private var courseVideos: List<Video>? = null
+    private var lastSeenID: Int? = null
     private lateinit var courseAdapterVertical: VideoListAdapter
 
     override fun onCreateView(
@@ -52,6 +56,10 @@ class DetailFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         hideBottomBar()
+        course?.let {
+            viewModel.getLastSeenVideo(it.id)
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,23 +112,39 @@ class DetailFragment : Fragment() {
                 is DetailState.CourseVideos -> {
                     binding.videoCountText.text =
                         resources.getString(R.string.video_count, state.videos.size.toString())
+
                     val totalTime = state.videos.sumOf { it.duration }
                     val formattedDuration = DateUtil.formatDurationWithoutSeconds(totalTime)
-                    binding.videoTimeCountText.text = formattedDuration
 
+                    binding.videoTimeCountText.text = formattedDuration
+                    courseVideos = state.videos
                     courseAdapterVertical =
                         VideoListAdapter(state.videos.toMutableList()) { course ->
                             if (canUserOpenVideos) {
                                 val intent = Intent(context, FullScreenPlayerActivity::class.java)
                                 intent.putExtra("course", course)
                                 startActivity(intent)
+                            } else {
+                                showAlertDialog(
+                                    requireContext(), getString(R.string.purchase),
+                                    getString(
+                                        R.string.you_have_not_purchased
+                                    )
+                                ) {
+                                }
                             }
                         }
                     binding.videosListView.adapter = courseAdapterVertical
                     binding.videosListView.visibility = View.VISIBLE
                 }
 
-                is DetailState.Loading -> {}
+                is DetailState.CourseLastSeenVideos -> {
+                    lastSeenID = state.id
+                }
+
+                is DetailState.Loading -> {
+
+                }
             }
 
         }
@@ -139,14 +163,25 @@ class DetailFragment : Fragment() {
     }
 
     private fun startToPlayVideos() {
-        Toast.makeText(context, "Video Start", Toast.LENGTH_SHORT).show()
+        val seenVideo = if (lastSeenID != -1) {
+            courseVideos?.find { it.id == lastSeenID }
+        } else {
+            courseVideos?.minByOrNull { it.order }
+        }
+        if (seenVideo != null) {
+            val intent = Intent(context, FullScreenPlayerActivity::class.java)
+            intent.putExtra("course", seenVideo)
+            startActivity(intent)
+        }
     }
+
 
     private fun setUpUI() {
         course?.let { c ->
             viewModel.getCategory(c.categoryId)
             viewModel.checkPurchaseAndWishlistStatus(c.id)
             viewModel.getCourseVideos(c.id)
+            viewModel.getLastSeenVideo(c.id)
             binding.apply {
                 course = c
             }
@@ -158,7 +193,8 @@ class DetailFragment : Fragment() {
                 chip.textSize = 12f
                 chip.setPadding(3, 0, 3, 0)
                 chip.chipStrokeWidth = 0.7f
-                chip.setChipBackgroundColorResource(R.color.chip_gray)
+                chip.setChipBackgroundColorResource(R.color.error_text_red)
+                chip.chipBackgroundColor = resources.getColorStateList(R.color.error_text_red, null)
                 chip.setTextColor(resources.getColor(R.color.chip_text_color, null))
                 chip.isClickable = false
                 binding.chipLayout.addView(chip)
@@ -202,29 +238,16 @@ class DetailFragment : Fragment() {
 
     private fun showBottomBar() {
         val bottomBar = requireActivity().findViewById<View>(R.id.main_bottom_nav)
-        bottomBar.visibility = View.VISIBLE
+        bottomBar?.let {
+            bottomBar.visibility = View.VISIBLE
+
+        }
     }
 
     private fun hideBottomBar() {
         val bottomBar = requireActivity().findViewById<View>(R.id.main_bottom_nav)
-        bottomBar.visibility = View.GONE
+        bottomBar?.let {
+            bottomBar.visibility = View.GONE
+        }
     }
 }
-
-/*
-requireActivity().lifecycle.addObserver(binding.youtubePlayerView)
-        binding.youtubePlayerView.addYouTubePlayerListener(object :
-            AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "wvxlX3kAsoU"
-                youTubePlayer.loadVideo(videoId, 0f)
-            }
-        })
-
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/youtube_player_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/video_content_textView" />
- */

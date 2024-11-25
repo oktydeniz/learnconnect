@@ -21,6 +21,8 @@
             android:id="@+id/thumbnailImageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/course_card_img_height"
+            android:background="@drawable/circular_rectangle__shape"
+            android:clipToOutline="true"
             android:contentDescription="@{course.title}"
             android:scaleType="fitXY"
             app:imageUrl="@{course.thumbnailUrl}" />
@@ -46,13 +48,41 @@
             android:text="@{course.description}"
             android:textSize="@dimen/text_14" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="@android:style/Widget.DeviceDefault.RatingBar.Small"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:numStars="5"
-            android:rating="@{course.averageRating}" />
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5">
+
+            <TextView
+                android:id="@+id/ratingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="start|top"
+                android:maxLines="1"
+                android:scrollHorizontally="false"
+                android:text="@string/course_rating"
+                android:textSize="@dimen/text_12" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/_5"
+                android:numStars="5"
+                android:rating="@{course.averageRating}" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_10"
+            android:layout_marginBottom="@dimen/_2"
+            android:background="@color/chip_gray" />
     </LinearLayout>
 </layout>

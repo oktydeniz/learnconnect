@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">LearnConnect</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="wishlist">WishList</string>
     <string name="profile">Profile</string>
     <string name="courses">Courses</string>
@@ -13,8 +11,9 @@
     <string name="e_mail">E-mail</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="register_text">Do not have account ? <u>Create one</u></string>
     <string name="full_name">Full Name</string>
-    <string name="policy">Policy</string>
+    <string name="policy">By creating an account, you agree <b><u>Terms of Use</u></b> and <b><u>Privacy Policy</u></b></string>
     <string name="mail_already_exist">Mail already exist</string>
     <string name="something_is_wrong">Something is Wrong!</string>
 
@@ -30,6 +29,7 @@
     <string name="welcome">Welcome</string>
     <string name="welcome_user">Welcome, %1$s</string>
     <string name="failed_to_register_user">Failed to register user.</string>
+    <string name="failed_to_login_user">Failed to login user.</string>
     <string name="logout">Logout</string>
     <string name="enable_dark_mode">Enable Dark Mode</string>
     <string name="about_me">About Me</string>
@@ -62,13 +62,17 @@
     <string name="ok">OK</string>
     <string name="purchase">Purchase</string>
     <string name="do_you_want_to_purchase_this_course">Do you want to purchase this course?</string>
-    <string name="successfully_purchased_course">Successfully Purchased Course</string>
+    <string name="successfully_purchased_course"><u>Successfully Purchased Course</u></string>
     <string name="you_have_not_purchased_any_course">You have not purchased any course</string>
     <string name="video_count">%1$s Video(s)</string>
-    <string name="title_activity_fullscreen_video_player">FullscreenVideoPlayer</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="exiting">Exiting!</string>
     <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
+    <string name="you_have_not_purchased">You have not purchased this course in order to play videos</string>
+    <string name="error">Error!</string>
+    <string name="we_can_not_play_video">We can not play video!</string>
+    <string name="course_rating">Course Rating: </string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="turkish">Türkçe</string>
 
 </resources>

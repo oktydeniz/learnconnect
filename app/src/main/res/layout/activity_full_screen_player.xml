@@ -7,16 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".player.FullScreenPlayerActivity">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
+    <Toolbar
         android:id="@+id/player_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:layout_height="@dimen/_64"
+        android:backgroundTint="@color/error_text_red"
+        android:background="@color/error_text_red"
         android:contentInsetStart="@dimen/_0"
         android:contentInsetLeft="@dimen/_0"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,22 +23,23 @@
 
         <ImageButton
             android:id="@+id/back_action_player"
-            android:layout_width="@dimen/_64"
-            android:layout_height="@dimen/_64"
+            android:layout_width="@dimen/_48"
+            android:layout_height="@dimen/_48"
+            app:tint="@color/white"
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="@string/back"
             android:src="@drawable/ic_arrow_back"
-            app:contentInsetStart="@dimen/_0"
-            app:tint="@color/black" />
+            app:contentInsetStart="@dimen/_0"/>
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/white"
             android:text="@string/app_name"
             android:textSize="@dimen/text_21" />
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/youtubePlayerView"

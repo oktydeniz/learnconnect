@@ -4,26 +4,31 @@ import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.odeniz.learnconnect.R
 import com.odeniz.learnconnect.databinding.ActivityFullScreenPlayerBinding
 import com.odeniz.learnconnect.entity.Video
+import com.odeniz.learnconnect.entity.VideoProgress
 import com.odeniz.learnconnect.util.LinkUtils
 import com.odeniz.learnconnect.util.showAlertDialog
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val ARG_PARAM1 = "course"
 
+@AndroidEntryPoint
 class FullScreenPlayerActivity : AppCompatActivity() {
 
+    private val viewModel: FullScreenViewModel by viewModels()
     private lateinit var binding: ActivityFullScreenPlayerBinding
     private var lastVideoTime: Float = 0f
+    private var videoProgress: VideoProgress? = null
     private lateinit var video: Video
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +43,7 @@ class FullScreenPlayerActivity : AppCompatActivity() {
             View.SYSTEM_UI_FLAG_FULLSCREEN or
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-
         setupUI()
-        videoSetUp()
     }
 
     private fun setupUI() {
@@ -52,7 +55,7 @@ class FullScreenPlayerActivity : AppCompatActivity() {
         }
         binding.toolbarTitle.text = video.title
         binding.backActionPlayer.setOnClickListener {
-            showExitConfirmationDialog()
+            onBackPressedDispatcher.onBackPressed()
         }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -60,6 +63,33 @@ class FullScreenPlayerActivity : AppCompatActivity() {
                 showExitConfirmationDialog()
             }
         })
+        observeState()
+    }
+
+    private fun observeState() {
+        viewModel.getProgress(video.id)
+        viewModel.state.observe(this) { state ->
+            when (state) {
+                is FullScreenState.Loading -> {
+                }
+
+                is FullScreenState.FoundProgress -> {
+                    videoProgress = state.videoProgress
+                    lastVideoTime = state.videoProgress.progress
+                    videoSetUp()
+                }
+
+                is FullScreenState.Error -> {
+                    lastVideoTime = 0f
+                    videoSetUp()
+                }
+
+                else -> {
+                    lastVideoTime = 0f
+                    videoSetUp()
+                }
+            }
+        }
     }
 
     private fun showExitConfirmationDialog() {
@@ -72,8 +102,10 @@ class FullScreenPlayerActivity : AppCompatActivity() {
     }
 
     private fun saveProgress() {
-        Toast.makeText(this, "Video Saved", Toast.LENGTH_SHORT).show()
-        finish()
+        if (lastVideoTime != 0f) {
+            viewModel.saveProgress(lastVideoTime, video.id, video.courseId)
+            finish()
+        }
     }
 
     private fun videoSetUp() {
@@ -83,7 +115,7 @@ class FullScreenPlayerActivity : AppCompatActivity() {
                 AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
 
-                    youTubePlayer.loadVideo(videoId, 0f)
+                    youTubePlayer.loadVideo(videoId, lastVideoTime)
                     youTubePlayer.addListener(object : YouTubePlayerListener {
                         override fun onApiChange(youTubePlayer: YouTubePlayer) {
                         }
@@ -136,8 +168,16 @@ class FullScreenPlayerActivity : AppCompatActivity() {
                     })
                 }
             })
-        } ?: Toast.makeText(this, "Video Link Error", Toast.LENGTH_SHORT).show()
+        } ?: showAlert()
+    }
 
+    private fun showAlert() {
+        showAlertDialog(
+            this, getString(R.string.error),
+            getString(R.string.we_can_not_play_video)
+        ) {
+            finish()
+        }
     }
 
     override fun onDestroy() {

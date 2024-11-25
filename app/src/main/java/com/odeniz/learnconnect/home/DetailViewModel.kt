@@ -11,6 +11,7 @@ import com.odeniz.learnconnect.entity.Wishlist
 import com.odeniz.learnconnect.entity.dao.CategoryDao
 import com.odeniz.learnconnect.entity.dao.UserCourseDao
 import com.odeniz.learnconnect.entity.dao.VideoDao
+import com.odeniz.learnconnect.entity.dao.VideoProgressDao
 import com.odeniz.learnconnect.entity.dao.WishlistDao
 import com.odeniz.learnconnect.home.state.DetailState
 import com.odeniz.learnconnect.local.DataStoreManager
@@ -18,6 +19,7 @@ import com.odeniz.learnconnect.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +30,7 @@ class DetailViewModel @Inject constructor(
     private val videoDao: VideoDao,
     private val userCourse: UserCourseDao,
     private val resources: Resources,
+    private val progressDao: VideoProgressDao,
     private val dataSource: DataStoreManager
 ) : ViewModel() {
 
@@ -36,7 +39,6 @@ class DetailViewModel @Inject constructor(
 
     fun getCategory(categoryId: Int) {
         viewModelScope.launch {
-            _detailState.value = DetailState.Loading
             val result = categoryDao.getCategoryById(categoryId).first()
             if (result != null) {
                 _detailState.value = DetailState.SuccessFindCategory(result)
@@ -49,7 +51,6 @@ class DetailViewModel @Inject constructor(
 
     fun checkPurchaseAndWishlistStatus(categoryId: Int) {
         viewModelScope.launch {
-            _detailState.value = DetailState.Loading
             try {
                 val isPurchased = userCourse.isPurchased(categoryId, getUserId()).first()
                 if (isPurchased) {
@@ -86,7 +87,6 @@ class DetailViewModel @Inject constructor(
 
     fun getCourseVideos(courseId: Int) {
         viewModelScope.launch {
-            _detailState.value = DetailState.Loading
             try {
                 val result = videoDao.getCourseVideos(courseId).first()
                 _detailState.value = DetailState.CourseVideos(result)
@@ -119,6 +119,22 @@ class DetailViewModel @Inject constructor(
                         enrollmentDate = formattedDate
                     )
                 )
+            }
+        }
+    }
+
+    fun getLastSeenVideo(courseId: Int) {
+        viewModelScope.launch {
+            try {
+                val result =
+                    progressDao.getLastSeenVideoId(courseId, getUserId().toInt()).firstOrNull()
+                if (result != null) {
+                    _detailState.value = DetailState.CourseLastSeenVideos(result)
+                } else {
+                    _detailState.value = DetailState.CourseLastSeenVideos(-1)
+                }
+            } catch (e: Exception) {
+                _detailState.value = DetailState.CourseLastSeenVideos(-1)
             }
         }
     }

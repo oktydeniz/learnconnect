@@ -8,5 +8,6 @@ sealed class DetailState {
     data class SuccessFindCategory(val category: Category) : DetailState()
     data class PurchaseStatus(val isPurchased: Boolean, val isInWishlist: Boolean) : DetailState()
     data class CourseVideos(val videos: List<Video>) : DetailState()
+    data class CourseLastSeenVideos(val id: Int) : DetailState()
     data class Error(val message: String) : DetailState()
 }

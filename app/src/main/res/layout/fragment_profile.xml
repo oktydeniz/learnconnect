@@ -25,12 +25,12 @@
                 android:id="@+id/profile_image_view"
                 android:layout_width="@dimen/logo_login_width"
                 android:layout_height="@dimen/logo_login_width"
-                app:imageUri="@{user.profileImage}"
                 android:layout_marginTop="@dimen/_24"
                 android:background="@drawable/circular_shape"
+                android:src="@drawable/profile_img"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_arrow_back"
+                android:clipToOutline="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -110,10 +110,11 @@
 
             <Button
                 android:id="@+id/save_changes_btn_action"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_150"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24"
                 android:text="@string/save"
+                android:backgroundTint="@color/error_text_red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/about_edit_text_layout" />

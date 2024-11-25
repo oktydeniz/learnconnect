@@ -14,7 +14,6 @@ object AppConstants {
     const val USER_PREF = "user_pref"
     const val LOGIN_KEY = "app_is_logged_in"
     const val DARK_MODE_KEY = "dark_mode_enabled"
-
     const val USER_ID = "user_id"
     const val USER_NAME = "user_name"
     const val USER_EMAIL = "user_email"
