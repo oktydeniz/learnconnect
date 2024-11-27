@@ -121,9 +121,14 @@ class DetailFragment : Fragment() {
                     courseAdapterVertical =
                         VideoListAdapter(state.videos.toMutableList()) { course ->
                             if (canUserOpenVideos) {
-                                val intent = Intent(context, FullScreenPlayerActivity::class.java)
-                                intent.putExtra("course", course)
-                                startActivity(intent)
+                                showAlertDialog(requireContext(), course.title, course.about) {
+                                    val intent = Intent(
+                                        requireContext(),
+                                        FullScreenPlayerActivity::class.java
+                                    )
+                                    intent.putExtra("course", course)
+                                    startActivity(intent)
+                                }
                             } else {
                                 showAlertDialog(
                                     requireContext(), getString(R.string.purchase),
